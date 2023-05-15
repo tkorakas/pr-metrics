@@ -4,7 +4,7 @@
   "description": "Generate PR metrics using GitHub actions.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "eslint src && ncc build src/index.js",
+    "build": "ncc build src/index.js",
     "test": "jest",
     "lint": "eslint ./"
   },
