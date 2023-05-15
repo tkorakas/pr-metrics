@@ -5324,6 +5324,30 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ 505:
+/***/ (function(module) {
+
+const COMMENT_MUTATION = `
+  mutation($input: AddCommentInput!) {
+    addComment(input: $input) {
+      clientMutationId
+    }
+  }
+`;
+
+module.exports = (octokit) => (body, subjectId) => {
+  const variables = { input: { body, subjectId } };
+  return octokit
+    .graphql(COMMENT_MUTATION, variables)
+    .catch((error) => {
+      const msg = `Error commenting on the pull request, with variables "${JSON.stringify(variables)}"`;
+      throw new Error(`${msg}. Error: ${error}`);
+    });
+};
+
+
+/***/ }),
+
 /***/ 510:
 /***/ (function(module) {
 
@@ -6191,6 +6215,7 @@ module.exports = require("util");
 const core = __webpack_require__(470);
 const github = __webpack_require__(469);
 const fetchPullRequestById = __webpack_require__(323);
+const addCommentOnPullRequest = __webpack_require__(505);
 
 
 async function run() {
@@ -6206,6 +6231,11 @@ async function run() {
     try {
         const data = await fetchPullRequestById(octokit)(github.context.payload.pull_request.node_id);
         console.log(data);
+        await addCommentOnPullRequest(octokit)(`
+        # Hello
+
+        this is a test comment
+        `, github.context.payload.pull_request.node_id);
     } catch(e) {
         console.error(e);
     }

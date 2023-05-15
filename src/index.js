@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fetchPullRequestById = require('./repositories/fetchPullRequestById');
+const addCommentOnPullRequest = require('./repositories/addCommentOnPullRequest');
 
 
 async function run() {
@@ -16,6 +17,11 @@ async function run() {
     try {
         const data = await fetchPullRequestById(octokit)(github.context.payload.pull_request.node_id);
         console.log(data);
+        await addCommentOnPullRequest(octokit)(`
+        # Hello
+
+        this is a test comment
+        `, github.context.payload.pull_request.node_id);
     } catch(e) {
         console.error(e);
     }
