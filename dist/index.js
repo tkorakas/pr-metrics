@@ -6,7 +6,7 @@ async function run() {
     const currentRepo = process.env.GITHUB_REPOSITORY;
     // const githubToken = core.getInput('github-token');
   
-    console.log('hello world', currentRepp);
+    console.log('hello world', currentRepo);
     console.log('context', github.context);
 };
 
