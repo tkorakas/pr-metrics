@@ -1,0 +1,14 @@
+name: 'Pull Request Metrics'
+author: 'Thanos Korakas'
+description: 'GitHub action to generate pull request metrics.'
+inputs:
+  github-token:
+    description: 'The default GitHub Token (secrets.GITHUB_TOKEN), used to publish comments as a bot. No need to assign a value for this input.'
+    required: true
+    default: ${{ github.token }}
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+branding:
+  icon: 'award'
+  color: 'yellow'
