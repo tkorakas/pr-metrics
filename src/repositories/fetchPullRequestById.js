@@ -6,6 +6,14 @@ const PR_BY_ID_QUERY = `
         url
         body
         number
+        createdAt
+        closedAt
+        reviewThreads(last: 50) {
+        nodes {
+            id
+            isResolved
+        }
+        }
         comments(last: 100) {
           nodes {
             author {
