@@ -1524,6 +1524,44 @@ exports.paginatingEndpoints = paginatingEndpoints;
 
 /***/ }),
 
+/***/ 323:
+/***/ (function(module) {
+
+const PR_BY_ID_QUERY = `
+  query($id: ID!) {
+    node(id: $id) {
+      ... on PullRequest {
+        id
+        url
+        body
+        number
+        comments(last: 100) {
+          nodes {
+            author {
+              login
+            }
+            body
+          }
+        }
+      }
+    }
+  }
+`;
+
+module.exports = (octokit) => (id) => {
+    const variables = { id };
+    return octokit
+      .graphql(PR_BY_ID_QUERY, variables)
+      .then(data => data)
+      .catch((error) => {
+        const msg = `Error fetching pull requests with id "${id}"`;
+        throw new Error(`${msg}. Error: ${error}`);
+      });
+  
+}
+
+/***/ }),
+
 /***/ 327:
 /***/ (function(__unusedmodule, exports) {
 
@@ -6144,11 +6182,19 @@ module.exports = require("util");
 
 const core = __webpack_require__(470);
 const github = __webpack_require__(469);
+const fetchPullRequestById = __webpack_require__(323);
 
 
 async function run() {
     const currentRepo = process.env.GITHUB_REPOSITORY;
-    // const githubToken = core.getInput('github-token');
+    const githubToken = core.getInput('github-token');
+
+    const octokit = github.getOctokit(githubToken);
+
+    // const container = new Map();
+    // container.set('fetchPullRequestById', fetchPullRequestById(octokit));
+    console.log(github.context.payload.pull_request.node_id, 'PR ID');
+    fetchPullRequestById(octokit)(github.context.payload.pull_request.node_id);
   
     console.log('hello world', currentRepo);
     console.log('context', github.context);
