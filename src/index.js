@@ -12,10 +12,16 @@ async function run() {
     // const container = new Map();
     // container.set('fetchPullRequestById', fetchPullRequestById(octokit));
     console.log(github.context.payload.pull_request.node_id, 'PR ID');
-    fetchPullRequestById(octokit)(github.context.payload.pull_request.node_id);
-  
-    console.log('hello world', currentRepo);
-    console.log('context', github.context);
+
+    try {
+        const data = await fetchPullRequestById(octokit)(github.context.payload.pull_request.node_id);
+        console.log(data);
+    } catch(e) {
+        console.error(e);
+    }
+    
+    // console.log('hello world', currentRepo);
+    // console.log('context', github.context);
 };
 
 
