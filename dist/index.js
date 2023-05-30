@@ -6576,7 +6576,7 @@ async function run() {
         const results = buildTable(pullRequests);
         console.log('PR Results');
         console.log(results);
-        const sum = pullRequests.reduce((acc, pr) => acc + pr.duration, 0);
+        const sum = pullRequests.reduce((acc, pr) => acc + (pr.durationRaw / 24), 0);
         console.log(`Average: ${sum/pullRequests.length}`)
 //         await addCommentOnPullRequest(octokit)(`# Pull Request metrics
 
