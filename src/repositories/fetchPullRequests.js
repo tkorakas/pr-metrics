@@ -25,12 +25,11 @@ const PRS_QUERY = `
 `;
 
 module.exports = (octokit) => ({
-    owner,
     repo,
     startDate,
     endDate
   }) => {
-    const searchQuery = `repo:${owner}/${repo} is:pr is:closed closed:${startDate}..${endDate}`;
+    const searchQuery = `repo:${repo} is:pr is:open is:closed closed:${startDate}..${endDate}`;
     const variables = { searchQuery };
 
     console.log(`Searching for: ${searchQuery}`);

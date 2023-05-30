@@ -1341,12 +1341,11 @@ const PRS_QUERY = `
 `;
 
 module.exports = (octokit) => ({
-    owner,
     repo,
     startDate,
     endDate
   }) => {
-    const searchQuery = `repo:${owner}/${repo} is:pr is:closed closed:${startDate}..${endDate}`;
+    const searchQuery = `repo:${repo} is:pr is:open is:closed closed:${startDate}..${endDate}`;
     const variables = { searchQuery };
 
     console.log(`Searching for: ${searchQuery}`);
@@ -6284,7 +6283,7 @@ async function run() {
         lastDay.setDate(0);
         const firstDay = new Date(lastDay);
         firstDay.setDate(1);
-        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo, startDate: firstDay.toISOString().slice(0, 10), endDate: lastDay.toISOString().slice(0, 10)});
+        const data = await fetchPullRequests(octokit)({ repo: currentRepo, startDate: firstDay.toISOString().slice(0, 10), endDate: lastDay.toISOString().slice(0, 10)});
         console.log(data);
         // await addCommentOnPullRequest(octokit)(`# Hello
 
