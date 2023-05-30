@@ -1,0 +1,35 @@
+{
+    "data": {
+      "search": {
+        "nodes": [
+          {
+            "title": "Feature/dynamic modules",
+            "url": "https://github.com/tkorakas/terraform-github/pull/2",
+            "id": "PR_kwDOI_Q0d85Nbo8n",
+            "publishedAt": "2023-04-02T12:52:35Z",
+            "closedAt": "2023-04-02T12:55:41Z",
+            "reviews": {
+              "nodes": []
+            },
+            "duration": "3 days"
+          },
+          {
+            "title": "refactor modules",
+            "url": "https://github.com/tkorakas/terraform-github/pull/1",
+            "id": "PR_kwDOI_Q0d85NbdJx",
+            "publishedAt": "2023-04-02T09:25:03Z",
+            "closedAt": "2023-04-04T21:30:17Z",
+            "reviews": {
+              "nodes": [
+                {
+                  "id": "PRR_kwDOI_Q0d85RxE7p",
+                  "submittedAt": "2023-04-04T21:30:12Z"
+                }
+              ]
+            },
+            "duration": "1 days"
+          }
+        ]
+      }
+    }
+  }
