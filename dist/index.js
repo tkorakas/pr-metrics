@@ -6284,7 +6284,7 @@ async function run() {
         lastDay.setDate(0);
         const firstDay = new Date(lastDay);
         firstDay.setDate(1);
-        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo, startDate: firstDay.toISOString().slice(0, 10), lastDay: lastDay.toISOString().slice(0, 10)});
+        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo, startDate: firstDay.toISOString().slice(0, 10), endDate: lastDay.toISOString().slice(0, 10)});
         console.log(data);
         // await addCommentOnPullRequest(octokit)(`# Hello
 
