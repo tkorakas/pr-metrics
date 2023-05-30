@@ -16,12 +16,14 @@ async function run() {
     console.log(github.context.payload.pull_request.node_id, 'PR ID');
 
     try {
-        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo});
+        const lastDay = (new Date()).setDate(0);
+        const firstDay = (new Date(lastDay)).setDate(1);
+        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo, startDate: firstDay.toISOString().slice(0, 10), lastDay: lastDay.toISOString().slice(0, 10)});
         console.log(data);
-        await addCommentOnPullRequest(octokit)(`# Hello
+        // await addCommentOnPullRequest(octokit)(`# Hello
 
-        this is a test comment
-        `, github.context.payload.pull_request.node_id);
+        // this is a test comment
+        // `, github.context.payload.pull_request.node_id);
     } catch(e) {
         console.error(e);
     }

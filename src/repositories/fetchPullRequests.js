@@ -26,9 +26,11 @@ const PRS_QUERY = `
 
 module.exports = (octokit) => ({
     owner,
-    repo
+    repo,
+    startDate,
+    endDate
   }) => {
-    const searchQuery = `repo:${owner}/${repo} is:pr is:open is:closed created:2023-04-01..2023-04-30`;
+    const searchQuery = `repo:${owner}/${repo} is:pr is:closed closed:${startDate}..${endDate}`;
     const variables = { searchQuery };
 
     return octokit
