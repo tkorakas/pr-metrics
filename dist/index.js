@@ -6572,6 +6572,7 @@ async function run() {
         }
         const pullRequests = buildData(data.search.nodes);
         const results = buildTable(pullRequests);
+        console.log('PR Results');
         console.log(results);
 //         await addCommentOnPullRequest(octokit)(`# Pull Request metrics
 
