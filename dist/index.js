@@ -1342,11 +1342,14 @@ const PRS_QUERY = `
 
 module.exports = (octokit) => ({
     owner,
-    repo
+    repo,
+    startDate,
+    endDate
   }) => {
-    const searchQuery = `repo:${owner}/${repo} is:pr is:open is:closed created:2023-04-01..2023-04-30`;
+    const searchQuery = `repo:${owner}/${repo} is:pr is:closed closed:${startDate}..${endDate}`;
     const variables = { searchQuery };
 
+    console.log(`Searching for: ${searchQuery}`);
     return octokit
       .graphql(PRS_QUERY, variables)
       .catch((error) => {
@@ -6277,12 +6280,14 @@ async function run() {
     console.log(github.context.payload.pull_request.node_id, 'PR ID');
 
     try {
-        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo});
+        const lastDay = (new Date()).setDate(0);
+        const firstDay = (new Date(lastDay)).setDate(1);
+        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo, startDate: firstDay.toISOString().slice(0, 10), lastDay: lastDay.toISOString().slice(0, 10)});
         console.log(data);
-        await addCommentOnPullRequest(octokit)(`# Hello
+        // await addCommentOnPullRequest(octokit)(`# Hello
 
-        this is a test comment
-        `, github.context.payload.pull_request.node_id);
+        // this is a test comment
+        // `, github.context.payload.pull_request.node_id);
     } catch(e) {
         console.error(e);
     }

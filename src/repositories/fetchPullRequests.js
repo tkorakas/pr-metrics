@@ -33,6 +33,7 @@ module.exports = (octokit) => ({
     const searchQuery = `repo:${owner}/${repo} is:pr is:closed closed:${startDate}..${endDate}`;
     const variables = { searchQuery };
 
+    console.log(`Searching for: ${searchQuery}`);
     return octokit
       .graphql(PRS_QUERY, variables)
       .catch((error) => {
