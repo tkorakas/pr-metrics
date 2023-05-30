@@ -16,7 +16,7 @@ async function run() {
     console.log(github.context.payload.pull_request.node_id, 'PR ID');
 
     try {
-        const data = await fetchPullRequests(octokit)('tkorakas', currentRepo);
+        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo});
         console.log(data);
         await addCommentOnPullRequest(octokit)(`# Hello
 

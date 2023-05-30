@@ -1315,10 +1315,10 @@ function register(state, name, method, options) {
 /***/ (function(module) {
 
 const PRS_QUERY = `
-  query ($query: String!) {
+  query ($searchQuery: String!) {
     search(
         first: 100
-        query: $query
+        query: $searchQuery
         type: ISSUE
     ) {
         nodes {
@@ -1344,8 +1344,8 @@ module.exports = (octokit) => ({
     owner,
     repo
   }) => {
-    const query = `repo:${owner}/${repo} is:pr is:open is:closed created:2023-04-01..2023-04-30`;
-    const variables = { query };
+    const searchQuery = `repo:${owner}/${repo} is:pr is:open is:closed created:2023-04-01..2023-04-30`;
+    const variables = { searchQuery };
 
     return octokit
       .graphql(PRS_QUERY, variables)
@@ -1612,6 +1612,7 @@ module.exports = (octokit) => (id) => {
         const msg = `Error fetching pull requests with id "${id}"`;
         throw new Error(`${msg}. Error: ${error}`);
       });
+  
 }
 
 /***/ }),
@@ -6276,7 +6277,7 @@ async function run() {
     console.log(github.context.payload.pull_request.node_id, 'PR ID');
 
     try {
-        const data = await fetchPullRequests(octokit)('tkorakas', currentRepo);
+        const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo});
         console.log(data);
         await addCommentOnPullRequest(octokit)(`# Hello
 

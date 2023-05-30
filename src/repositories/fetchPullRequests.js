@@ -1,8 +1,8 @@
 const PRS_QUERY = `
-  query ($query: String!) {
+  query ($searchQuery: String!) {
     search(
         first: 100
-        query: $query
+        query: $searchQuery
         type: ISSUE
     ) {
         nodes {
@@ -28,8 +28,8 @@ module.exports = (octokit) => ({
     owner,
     repo
   }) => {
-    const query = `repo:${owner}/${repo} is:pr is:open is:closed created:2023-04-01..2023-04-30`;
-    const variables = { query };
+    const searchQuery = `repo:${owner}/${repo} is:pr is:open is:closed created:2023-04-01..2023-04-30`;
+    const variables = { searchQuery };
 
     return octokit
       .graphql(PRS_QUERY, variables)
