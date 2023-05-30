@@ -1345,7 +1345,7 @@ module.exports = (octokit) => ({
     repo
   }) => {
     const query = `repo:${owner}/${repo} is:pr is:open is:closed created:2023-04-01..2023-04-30`;
-    const variables = { query, after, owner, repo };
+    const variables = { query };
 
     return octokit
       .graphql(PRS_QUERY, variables)
