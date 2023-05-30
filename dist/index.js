@@ -1670,8 +1670,7 @@ module.exports = (octokit) => ({
     startDate,
     endDate
   }) => {
-    // const searchQuery = `repo:${repo} is:pr closed:${startDate}..${endDate}`;
-    const searchQuery = `repo:${repo} is:pr`;
+    const searchQuery = `repo:${repo} is:pr closed:${startDate}..${endDate}`;
 
     const variables = { searchQuery };
 
@@ -6567,7 +6566,7 @@ async function run() {
         const firstDay = new Date(lastDay);
         firstDay.setDate(1);
         const data = await fetchPullRequests(octokit)({ repo: currentRepo, startDate: firstDay.toISOString().slice(0, 10), endDate: lastDay.toISOString().slice(0, 10)});
-        if (!data.data.search || data.data.search.length === 0) {
+        if (!data.data || !data.data.search || data.data.search.length === 0) {
             console.log('No pull requests found');
         }
         const pullRequests = buildData(data.data.search.nodes);
