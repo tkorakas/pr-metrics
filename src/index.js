@@ -16,8 +16,10 @@ async function run() {
     console.log(github.context.payload.pull_request.node_id, 'PR ID');
 
     try {
-        const lastDay = (new Date()).setDate(0);
-        const firstDay = (new Date(lastDay)).setDate(1);
+        const lastDay = new Date();
+        lastDay.setDate(0);
+        const firstDay = new Date(lastDay);
+        firstDay.setDate(1);
         const data = await fetchPullRequests(octokit)({owner: 'tkorakas', repo: currentRepo, startDate: firstDay.toISOString().slice(0, 10), lastDay: lastDay.toISOString().slice(0, 10)});
         console.log(data);
         // await addCommentOnPullRequest(octokit)(`# Hello
