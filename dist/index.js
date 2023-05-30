@@ -6575,9 +6575,9 @@ async function run() {
         console.log(data);
         await addCommentOnPullRequest(octokit)(`# Pull Request metrics
 
-        ${results}
-        
-        `, github.context.payload.pull_request.node_id);
+${results}
+
+`, github.context.payload.pull_request.node_id);
     } catch(e) {
         console.error(e);
     }
