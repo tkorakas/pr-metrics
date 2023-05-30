@@ -8,6 +8,7 @@ module.exports = (pullRequests) => {
     
         return {
             ...pr,
+            durationRaw: diffHours,
             duration: diffDays > 0 ? `${diffDays} days` : `${diffHours} hours`
         }
     });

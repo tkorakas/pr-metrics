@@ -23,9 +23,12 @@ async function run() {
             return;
         }
         const pullRequests = buildData(data.search.nodes);
+        pullRequests.sort((a, b) => b.durationRaw - a.durationRaw)
         const results = buildTable(pullRequests);
         console.log('PR Results');
         console.log(results);
+        const sum = pullRequests.reduce((acc, pr) => acc + pr.duration, 0);
+        console.log(`Average: ${sum/pullRequests.length}`)
 //         await addCommentOnPullRequest(octokit)(`# Pull Request metrics
 
 // ${results}
