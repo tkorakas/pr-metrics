@@ -1311,6 +1311,53 @@ function register(state, name, method, options) {
 
 /***/ }),
 
+/***/ 292:
+/***/ (function(module) {
+
+const PRS_QUERY = `
+  query ($query: String!) {
+    search(
+        first: 100
+        query: $query
+        type: ISSUE
+    ) {
+        nodes {
+        ... on PullRequest {
+            title
+            url
+            id
+            publishedAt
+            closedAt
+            reviews(first: 1) {
+            nodes {
+                id
+                submittedAt
+            }
+            }
+        }
+        }
+    }
+  }
+`;
+
+module.exports = (octokit) => ({
+    owner,
+    repo
+  }) => {
+    const query = `repo:${owner}/${repo} is:pr is:open is:closed created:2023-04-01..2023-04-30`;
+    const variables = { query, after, owner, repo };
+
+    return octokit
+      .graphql(PRS_QUERY, variables)
+      .catch((error) => {
+        const msg = `Error fetching pull requests with variables "${JSON.stringify(variables)}"`;
+        throw new Error(`${msg}. Error: ${error}`);
+      });
+  };
+
+
+/***/ }),
+
 /***/ 299:
 /***/ (function(__unusedmodule, exports) {
 
@@ -1565,7 +1612,6 @@ module.exports = (octokit) => (id) => {
         const msg = `Error fetching pull requests with id "${id}"`;
         throw new Error(`${msg}. Error: ${error}`);
       });
-  
 }
 
 /***/ }),
@@ -6216,6 +6262,7 @@ const core = __webpack_require__(470);
 const github = __webpack_require__(469);
 const fetchPullRequestById = __webpack_require__(323);
 const addCommentOnPullRequest = __webpack_require__(505);
+const fetchPullRequests = __webpack_require__(292);
 
 
 async function run() {
@@ -6229,10 +6276,9 @@ async function run() {
     console.log(github.context.payload.pull_request.node_id, 'PR ID');
 
     try {
-        const data = await fetchPullRequestById(octokit)(github.context.payload.pull_request.node_id);
+        const data = await fetchPullRequests(octokit)('tkorakas', currentRepo);
         console.log(data);
-        await addCommentOnPullRequest(octokit)(`
-        # Hello
+        await addCommentOnPullRequest(octokit)(`# Hello
 
         this is a test comment
         `, github.context.payload.pull_request.node_id);
