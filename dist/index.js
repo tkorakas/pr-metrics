@@ -6572,12 +6572,12 @@ async function run() {
         }
         const pullRequests = buildData(data.search.nodes);
         const results = buildTable(pullRequests);
-        console.log(data);
-        await addCommentOnPullRequest(octokit)(`# Pull Request metrics
+        console.log(results);
+//         await addCommentOnPullRequest(octokit)(`# Pull Request metrics
 
-${results}
+// ${results}
 
-`, github.context.payload.pull_request.node_id);
+// `, github.context.payload.pull_request.node_id);
     } catch(e) {
         console.error(e);
     }
