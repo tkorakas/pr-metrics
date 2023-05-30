@@ -29,7 +29,7 @@ module.exports = (octokit) => ({
     startDate,
     endDate
   }) => {
-    const searchQuery = `repo:${repo} is:pr is:open is:closed created:${startDate}..${endDate}`;
+    const searchQuery = `repo:${repo} is:pr closed:${startDate}..${endDate}`;
     const variables = { searchQuery };
 
     console.log(`Searching for: ${searchQuery}`);
